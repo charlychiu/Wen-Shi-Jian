@@ -44,6 +44,7 @@ import android.graphics.Rect;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.microsoft.projectoxford.face.contract.Face;
 import com.microsoft.projectoxford.face.contract.FaceRectangle;
@@ -73,6 +74,7 @@ public class ImageHelper {
             Uri imageUri,
             ContentResolver contentResolver) {
         try {
+            Log.d("helper.ImageHelper", "imageUri: " + imageUri);
             // Load the image into InputStream.
             InputStream imageInputStream = contentResolver.openInputStream(imageUri);
 
@@ -106,8 +108,9 @@ public class ImageHelper {
                         false);
             }
 
-            return rotateBitmap(bitmap, getImageRotationAngle(imageUri, contentResolver));
+            return bitmap;
         } catch (Exception e) {
+            Log.d("helper.ImageHelper", e.getMessage());
             return null;
         }
     }

@@ -1,8 +1,10 @@
 package com.ncku.iir.wen_shi_jian;
 
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -57,8 +60,17 @@ public class DetectionActivity extends AppCompatActivity {
         protected Face[] doInBackground(InputStream... params) {
             // Get an instance of face service client to detect faces in image.
             FaceServiceClient faceServiceClient = SampleApp.getFaceServiceClient();
+
+            if(faceServiceClient != null) {
+                Log.d("DetectionActivity", "faceServiceClient not null");
+            } else {
+                Log.d("DetectionActivity", "faceServiceClient is null");
+            }
+
             try {
                 publishProgress("Detecting...");
+                Log.d("DetectionActivity", "back service detecting...");
+                Log.d("DetectionActivity", "back service inputStream: " + params[0]);
 
                 // Start detection.
                 return faceServiceClient.detect(
@@ -87,6 +99,7 @@ public class DetectionActivity extends AppCompatActivity {
                 mSucceed = false;
                 publishProgress(e.getMessage());
 //                addLog(e.getMessage());
+                Log.d("DetectionActivity", "back service error: " + e.getMessage());
                 return null;
             }
         }
@@ -95,19 +108,24 @@ public class DetectionActivity extends AppCompatActivity {
         protected void onPreExecute() {
             mProgressDialog.show();
 //            addLog("Request: Detecting in image " + mImageUri);
+            Log.d("DetectionActivity", "Request: Detecting in image " + mImageUri);
         }
 
         @Override
         protected void onProgressUpdate(String... progress) {
             mProgressDialog.setMessage(progress[0]);
 //            setInfo(progress[0]);
+            Log.d("DetectionActivity", "Progress update: " + progress[0]);
         }
 
         @Override
         protected void onPostExecute(Face[] result) {
+            Log.d("DetectionActivity", "onPostExecute: " + mSucceed);
             if (mSucceed) {
 //                addLog("Response: Success. Detected " + (result == null ? 0 : result.length)
 //                        + " face(s) in " + mImageUri);
+                Log.d("DetectionActivity", "Response: Success. Detected " + (result == null ? 0 : result.length)
+                        + " face(s) in " + mImageUri);
             }
 
             // Show the result on screen when detection is done.
@@ -134,7 +152,7 @@ public class DetectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detection);
 
         mProgressDialog = new ProgressDialog(this);
-//        mProgressDialog.setTitle(getString(R.string.progress_dialog_title));
+        mProgressDialog.setTitle("progress_dialog_title");
 
         selectImage(); // Take picture from user
     }
@@ -153,8 +171,10 @@ public class DetectionActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     Log.d("DetectionActivity", "get result code from SelectImageActivity");
                     // If image is selected successfully, set the image URI and bitmap.
-                    mImageUri = data.getData();
+                    mImageUri = data.getData(); // Exactly get image from other Activity --> checked
                     Log.d("DetectionActivity", "mImageUri: " + mImageUri);
+                    Log.d("DetectionActivity", "external-path: " + Environment.getExternalStorageDirectory());
+
                     mBitmap = ImageHelper.loadSizeLimitedBitmapFromUri(
                             mImageUri, getContentResolver());
 
@@ -212,6 +232,7 @@ public class DetectionActivity extends AppCompatActivity {
 
     // Called when the "Detect" button is clicked.
     public void detect(View view) {
+        Log.d("DetectionActivity", "backend start");
         // Put the image into an input stream for detection.
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
@@ -263,5 +284,21 @@ public class DetectionActivity extends AppCompatActivity {
         mBitmap = null;
     }
 
+    public static String getFilePathFromContentUri(Uri selectedVideoUri,
+                                                   ContentResolver contentResolver) {
+        String filePath;
+        String[] filePathColumn = {MediaStore.Images.ImageColumns.ORIENTATION};
+
+        Cursor cursor = contentResolver.query(selectedVideoUri, filePathColumn, null, null, null);
+//      也可用下面的方法拿到cursor
+//      Cursor cursor = this.context.managedQuery(selectedVideoUri, filePathColumn, null, null, null);
+
+        cursor.moveToFirst();
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        filePath = cursor.getString(columnIndex);
+        cursor.close();
+        Log.d("test", filePath);
+        return filePath;
+    }
 
 }
