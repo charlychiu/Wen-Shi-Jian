@@ -10,9 +10,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.start_page);
     }
 
+    // TODO: step 1. click 'start' button
     public void detection(View view) {
         Intent intent = new Intent(this, DetectionActivity.class);
         startActivity(intent);
