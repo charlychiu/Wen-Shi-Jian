@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -21,6 +24,14 @@ public class MainActivity extends AppCompatActivity {
 //        SharedPreferences mPreferences = Global.getPrefInstance();
 //        String tmpUserName = mPreferences.getString("username", "Not Value");
 //        Log.d("MainActivity", tmpUserName);
+
+        // Save to Firebase pattern
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("score");
+//        myRef.child("username").setValue("reward");
+
+        Intent intent = new Intent(this, LeaderBoardActivity.class);
+        startActivity(intent);
 
     }
 

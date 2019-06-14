@@ -49,12 +49,7 @@ public class UserActivity extends AppCompatActivity {
         String userInputName = nameText.getText().toString();
         String userInputAge = ageText.getText().toString();
 
-        //TODO save user name
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference(userInputName);
-//
-//        myRef.setValue(userInputAge);
-
+        //TODO: step 6 save username & age to sharedPreferences
         SharedPreferences mPreferences = Global.getPrefInstance();
         mPreferences.edit().putString("username", userInputName).apply();
         mPreferences.edit().putString("age", userInputAge).apply();
