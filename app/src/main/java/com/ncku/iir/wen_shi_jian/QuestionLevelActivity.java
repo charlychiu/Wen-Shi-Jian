@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 public class QuestionLevelActivity extends AppCompatActivity {
@@ -30,7 +29,7 @@ public class QuestionLevelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 //easy
-                goQuestion(35);
+                goQuestionType(35);
             }
 
         });
@@ -40,7 +39,7 @@ public class QuestionLevelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 //hard
-                goQuestion(36);
+                goQuestionType(36);
             }
 
         });
@@ -50,8 +49,8 @@ public class QuestionLevelActivity extends AppCompatActivity {
     }
 
 
-    public void goQuestion(int topicId) {
-        Intent intent = new Intent(this, QuestionActivity.class);
+    public void goQuestionType(int topicId) {
+        Intent intent = new Intent(this, QuestionTypeActivity.class);
         intent.putExtra("username", username);
         intent.putExtra("topicId", topicId);
         intent.putExtra("q_count", 1);

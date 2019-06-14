@@ -2,13 +2,13 @@ package com.ncku.iir.wen_shi_jian;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class QuestionActivity extends AppCompatActivity {
+
 
     String username = "Wen-Shi-Jian";
 
@@ -18,16 +18,21 @@ public class QuestionActivity extends AppCompatActivity {
     int q_count = 1;
     int maxCorrect = 0;
 
+    //layout
+    TextView timeView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.question_type_page);
+        setContentView(R.layout.question_page);
 
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
         topicId = intent.getIntExtra("topicId", 35);
         q_count = intent.getIntExtra("q_count", 1);
         maxCorrect = intent.getIntExtra("maxCorrect", 0);
+
+        q_count += 1;
 
         Log.d("questionActivity", username);
         Log.d("questionActivity", String.valueOf(topicId));
@@ -44,22 +49,20 @@ public class QuestionActivity extends AppCompatActivity {
             countdown = 8;
         }
 
+        timeView = findViewById(R.id.timeView);
 
 
-    }
+        CountDownTimer countDownTimer = new CountDownTimer(countdown*1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeView.setText(String.valueOf(millisUntilFinished/1000));
+            }
 
-
-    // Save the activity state when it's going to stop.
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-    }
-
-    // Recover the saved state when the activity is recreated.
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
+            @Override
+            public void onFinish() {
+                timeView.setText(String.valueOf(0));
+            }
+        }.start();
 
     }
 

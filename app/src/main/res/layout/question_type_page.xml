@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:text="題目類型"
+        android:text="時事"
         android:textColor="@android:color/white"
         android:textSize="80dp"
         android:gravity="center"
