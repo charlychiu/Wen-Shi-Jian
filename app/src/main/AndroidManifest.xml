@@ -16,6 +16,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".SelectImageActivity"></activity>
         <activity android:name=".DetectionActivity" />
+        <activity android:name=".QuestionLevelActivity" />
+        <activity android:name=".QuestionActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
