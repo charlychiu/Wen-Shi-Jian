@@ -274,6 +274,49 @@ public class DetectionActivity extends AppCompatActivity {
 //                // Show the detailed list of detected faces.
 //                ListView listView = (ListView) findViewById(R.id.list_detected_faces);
 //                listView.setAdapter(faceListAdapter);
+
+                // TODO Handle Face information
+
+                // The detected faces.
+                List<Face> faces;
+                faces = new ArrayList<>();
+
+                if (result != null) {
+                    faces = Arrays.asList(result);
+                    for (Face face : faces) {
+//                        try {
+//                            // Crop face thumbnail with five main landmarks drawn from original image.
+//                            faceThumbnails.add(ImageHelper.generateFaceThumbnail(
+//                                    mBitmap, face.faceRectangle));
+                            DecimalFormat formatter = new DecimalFormat("#0.0");
+                            String face_description = String.format("Age: %s  Gender: %s\nHair: %s  FacialHair: %s\nMakeup: %s  %s\nForeheadOccluded: %s  Blur: %s\nEyeOccluded: %s  %s\n" +
+                                            "MouthOccluded: %s  Noise: %s\nGlassesType: %s\nHeadPose: %s\nAccessories: %s",
+                                    face.faceAttributes.age,
+                                    face.faceAttributes.gender,
+                                    getHair(face.faceAttributes.hair),
+                                    getFacialHair(face.faceAttributes.facialHair),
+                                    getMakeup((face).faceAttributes.makeup),
+                                    getEmotion(face.faceAttributes.emotion),
+                                    face.faceAttributes.occlusion.foreheadOccluded,
+                                    face.faceAttributes.blur.blurLevel,
+                                    face.faceAttributes.occlusion.eyeOccluded,
+                                    face.faceAttributes.exposure.exposureLevel,
+                                    face.faceAttributes.occlusion.mouthOccluded,
+                                    face.faceAttributes.noise.noiseLevel,
+                                    face.faceAttributes.glasses,
+                                    getHeadPose(face.faceAttributes.headPose),
+                                    getAccessories(face.faceAttributes.accessories)
+                            );
+                            Log.d("DetectionActivity", face_description);
+//                        } catch (IOException e) {
+//                            // Show the exception when generating face thumbnail fails.
+////                            setInfo(e.getMessage());
+//                            Log.d("DetectionActivity", "error: " + e.getMessage());
+//                        }
+                    }
+                }
+
+
             } else {
                 detectionResult = "0 face detected";
             }
@@ -284,21 +327,107 @@ public class DetectionActivity extends AppCompatActivity {
         mBitmap = null;
     }
 
-    public static String getFilePathFromContentUri(Uri selectedVideoUri,
-                                                   ContentResolver contentResolver) {
-        String filePath;
-        String[] filePathColumn = {MediaStore.Images.ImageColumns.ORIENTATION};
+    private String getHair(Hair hair) {
+        if (hair.hairColor.length == 0)
+        {
+            if (hair.invisible)
+                return "Invisible";
+            else
+                return "Bald";
+        }
+        else
+        {
+            int maxConfidenceIndex = 0;
+            double maxConfidence = 0.0;
 
-        Cursor cursor = contentResolver.query(selectedVideoUri, filePathColumn, null, null, null);
-//      也可用下面的方法拿到cursor
-//      Cursor cursor = this.context.managedQuery(selectedVideoUri, filePathColumn, null, null, null);
+            for (int i = 0; i < hair.hairColor.length; ++i)
+            {
+                if (hair.hairColor[i].confidence > maxConfidence)
+                {
+                    maxConfidence = hair.hairColor[i].confidence;
+                    maxConfidenceIndex = i;
+                }
+            }
 
-        cursor.moveToFirst();
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        filePath = cursor.getString(columnIndex);
-        cursor.close();
-        Log.d("test", filePath);
-        return filePath;
+            return hair.hairColor[maxConfidenceIndex].color.toString();
+        }
+    }
+
+    private String getMakeup(Makeup makeup) {
+        return  (makeup.eyeMakeup || makeup.lipMakeup) ? "Yes" : "No" ;
+    }
+
+    private String getAccessories(Accessory[] accessories) {
+        if (accessories.length == 0)
+        {
+            return "NoAccessories";
+        }
+        else
+        {
+            String[] accessoriesList = new String[accessories.length];
+            for (int i = 0; i < accessories.length; ++i)
+            {
+                accessoriesList[i] = accessories[i].type.toString();
+            }
+
+            return TextUtils.join(",", accessoriesList);
+        }
+    }
+
+    private String getFacialHair(FacialHair facialHair) {
+        return (facialHair.moustache + facialHair.beard + facialHair.sideburns > 0) ? "Yes" : "No";
+    }
+
+    private String getEmotion(Emotion emotion)
+    {
+        String emotionType = "";
+        double emotionValue = 0.0;
+        if (emotion.anger > emotionValue)
+        {
+            emotionValue = emotion.anger;
+            emotionType = "Anger";
+        }
+        if (emotion.contempt > emotionValue)
+        {
+            emotionValue = emotion.contempt;
+            emotionType = "Contempt";
+        }
+        if (emotion.disgust > emotionValue)
+        {
+            emotionValue = emotion.disgust;
+            emotionType = "Disgust";
+        }
+        if (emotion.fear > emotionValue)
+        {
+            emotionValue = emotion.fear;
+            emotionType = "Fear";
+        }
+        if (emotion.happiness > emotionValue)
+        {
+            emotionValue = emotion.happiness;
+            emotionType = "Happiness";
+        }
+        if (emotion.neutral > emotionValue)
+        {
+            emotionValue = emotion.neutral;
+            emotionType = "Neutral";
+        }
+        if (emotion.sadness > emotionValue)
+        {
+            emotionValue = emotion.sadness;
+            emotionType = "Sadness";
+        }
+        if (emotion.surprise > emotionValue)
+        {
+            emotionValue = emotion.surprise;
+            emotionType = "Surprise";
+        }
+        return String.format("%s: %f", emotionType, emotionValue);
+    }
+
+    private String getHeadPose(HeadPose headPose)
+    {
+        return String.format("Pitch: %s, Roll: %s, Yaw: %s", headPose.pitch, headPose.roll, headPose.yaw);
     }
 
 }
