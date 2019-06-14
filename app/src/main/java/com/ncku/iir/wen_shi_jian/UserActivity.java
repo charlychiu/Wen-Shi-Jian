@@ -1,5 +1,6 @@
 package com.ncku.iir.wen_shi_jian;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -9,6 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -36,11 +40,25 @@ public class UserActivity extends AppCompatActivity {
                 ageText = (EditText) findViewById(R.id.ageText);
                 ageText.setText(String.valueOf(Math.round(Float.parseFloat(age))));
             }
-            
+
         }
     }
 
     public void startGame(View view) {
         // TODO: step 6 save user data to DB
+        String userInputName = nameText.getText().toString();
+        String userInputAge = ageText.getText().toString();
+
+        //TODO save user name
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference(userInputName);
+//
+//        myRef.setValue(userInputAge);
+
+        SharedPreferences mPreferences = Global.getPrefInstance();
+        mPreferences.edit().putString("username", userInputName).apply();
+        mPreferences.edit().putString("age", userInputAge).apply();
+
+
     }
 }

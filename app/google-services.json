@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "414432783734",
+    "firebase_url": "https://wen-shi-jian.firebaseio.com",
+    "project_id": "wen-shi-jian",
+    "storage_bucket": "wen-shi-jian.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414432783734:android:d04ba345adff7025",
+        "android_client_info": {
+          "package_name": "com.ncku.iir.wen_shi_jian"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414432783734-gndlpsm41dhq2n4efegf403p6u5j08e6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRgYHKorKKT7WE8M9lcJF6_9GoR4REpek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414432783734-gndlpsm41dhq2n4efegf403p6u5j08e6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
