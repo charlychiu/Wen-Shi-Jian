@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -61,7 +62,7 @@ public class DetectionActivity extends AppCompatActivity {
             // Get an instance of face service client to detect faces in image.
             FaceServiceClient faceServiceClient = SampleApp.getFaceServiceClient();
 
-            if(faceServiceClient != null) {
+            if (faceServiceClient != null) {
                 Log.d("DetectionActivity", "faceServiceClient not null");
             } else {
                 Log.d("DetectionActivity", "faceServiceClient is null");
@@ -79,7 +80,7 @@ public class DetectionActivity extends AppCompatActivity {
                         true,       /* Whether to return face landmarks */
                         /* Which face attributes to analyze, currently we support:
                            age,gender,headPose,smile,facialHair */
-                        new FaceServiceClient.FaceAttributeType[] {
+                        new FaceServiceClient.FaceAttributeType[]{
                                 FaceServiceClient.FaceAttributeType.Age,
                                 FaceServiceClient.FaceAttributeType.Gender,
                                 FaceServiceClient.FaceAttributeType.Smile,
@@ -130,6 +131,7 @@ public class DetectionActivity extends AppCompatActivity {
 
             // Show the result on screen when detection is done.
             setUiAfterDetection(result, mSucceed);
+
         }
     }
 
@@ -152,8 +154,9 @@ public class DetectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detection);
 
         mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setTitle("progress_dialog_title");
+        mProgressDialog.setTitle("Progress Dialog");
 
+        // TODO: step 2. open camera, take picture
         selectImage(); // Take picture from user
     }
 
@@ -166,47 +169,32 @@ public class DetectionActivity extends AppCompatActivity {
     // Called when image selection is done.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case REQUEST_SELECT_IMAGE:
-                if (resultCode == RESULT_OK) {
-                    Log.d("DetectionActivity", "get result code from SelectImageActivity");
-                    // If image is selected successfully, set the image URI and bitmap.
-                    mImageUri = data.getData(); // Exactly get image from other Activity --> checked
-                    Log.d("DetectionActivity", "mImageUri: " + mImageUri);
-                    Log.d("DetectionActivity", "external-path: " + Environment.getExternalStorageDirectory());
+        if (requestCode == REQUEST_SELECT_IMAGE) {
+            if (resultCode == RESULT_OK) {
+                Log.d("DetectionActivity", "get result code from SelectImageActivity");
+                // If image is selected successfully, set the image URI and bitmap.
+                mImageUri = data.getData(); // Exactly get image from other Activity --> checked
+                Log.d("DetectionActivity", "mImageUri: " + mImageUri);
+                Log.d("DetectionActivity", "external-path: " + Environment.getExternalStorageDirectory());
 
-                    mBitmap = ImageHelper.loadSizeLimitedBitmapFromUri(
-                            mImageUri, getContentResolver());
+                mBitmap = ImageHelper.loadSizeLimitedBitmapFromUri(
+                        mImageUri, getContentResolver());
 
-                    if (mBitmap != null) {
-                        Log.d("DetectionActivity", "mBitmap is not null --> correct");
-                        // Show the image on screen.
-                        ImageView imageView = (ImageView) findViewById(R.id.image);
-                        imageView.setImageBitmap(mBitmap);
+                if (mBitmap != null) {
+                    Log.d("DetectionActivity", "mBitmap is not null --> correct");
+                    // Show the image on screen.
+                    ImageView imageView = (ImageView) findViewById(R.id.image);
+                    imageView.setImageBitmap(mBitmap);
 
-                        // Add detection log.
-//                        addLog("Image: " + mImageUri + " resized to " + mBitmap.getWidth()
-//                                + "x" + mBitmap.getHeight());
-                        Log.d("DetectionActivity", "Image: " + mImageUri + " resized to " + mBitmap.getWidth()
-                                + "x" + mBitmap.getHeight());
-                    } else {
-                        Log.d("DetectionActivity", "mBitmap is null --> error");
-                    }
+                    Log.d("DetectionActivity", "Image: " + mImageUri + " resized to " + mBitmap.getWidth()
+                            + "x" + mBitmap.getHeight());
 
-//                    // Clear the detection result.
-//                    FaceListAdapter faceListAdapter = new FaceListAdapter(null);
-//                    ListView listView = (ListView) findViewById(R.id.list_detected_faces);
-//                    listView.setAdapter(faceListAdapter);
-//
-//                    // Clear the information panel.
-//                    setInfo("");
-//
-//                    // Enable button "detect" as the image is selected and not detected.
-//                    setDetectButtonEnabledStatus(true);
+                    // TODO: step 3. call for face api for recognition
+                    detect();
+                } else {
+                    Log.d("DetectionActivity", "mBitmap is null --> error");
                 }
-                break;
-            default:
-                break;
+            }
         }
     }
 
@@ -230,8 +218,7 @@ public class DetectionActivity extends AppCompatActivity {
         }
     }
 
-    // Called when the "Detect" button is clicked.
-    public void detect(View view) {
+    public void detect() {
         Log.d("DetectionActivity", "backend start");
         // Put the image into an input stream for detection.
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -240,21 +227,14 @@ public class DetectionActivity extends AppCompatActivity {
 
         // Start a background task to detect faces in the image.
         new DetectionTask().execute(inputStream);
-
-        // Prevent button click during detecting.
-//        setAllButtonsEnabledStatus(false);
     }
 
     // Show the result on screen when detection is done.
     private void setUiAfterDetection(Face[] result, boolean succeed) {
+        // TODO: step 4 get result from server
+
         // Detection is done, hide the progress dialog.
         mProgressDialog.dismiss();
-
-        // Enable all the buttons.
-//        setAllButtonsEnabledStatus(true);
-
-        // Disable button "detect" as the image has already been detected.
-//        setDetectButtonEnabledStatus(false);
 
         if (succeed) {
             // The information about the detection result.
@@ -262,65 +242,61 @@ public class DetectionActivity extends AppCompatActivity {
             if (result != null) {
                 detectionResult = result.length + " face"
                         + (result.length != 1 ? "s" : "") + " detected";
+                Log.d("DetectionActivity", "detectionResult outer Task: " + detectionResult);
 
                 // Show the detected faces on original image.
                 ImageView imageView = (ImageView) findViewById(R.id.image);
                 imageView.setImageBitmap(ImageHelper.drawFaceRectanglesOnBitmap(
                         mBitmap, result, true));
 
-                // Set the adapter of the ListView which contains the details of the detected faces.
-//                FaceListAdapter faceListAdapter = new FaceListAdapter(result);
-//
-//                // Show the detailed list of detected faces.
-//                ListView listView = (ListView) findViewById(R.id.list_detected_faces);
-//                listView.setAdapter(faceListAdapter);
-
                 // TODO Handle Face information
 
                 // The detected faces.
                 List<Face> faces;
-                faces = new ArrayList<>();
+//                faces = new ArrayList<>();
 
-                if (result != null) {
-                    faces = Arrays.asList(result);
-                    for (Face face : faces) {
-//                        try {
-//                            // Crop face thumbnail with five main landmarks drawn from original image.
-//                            faceThumbnails.add(ImageHelper.generateFaceThumbnail(
-//                                    mBitmap, face.faceRectangle));
-                            DecimalFormat formatter = new DecimalFormat("#0.0");
-                            String face_description = String.format("Age: %s  Gender: %s\nHair: %s  FacialHair: %s\nMakeup: %s  %s\nForeheadOccluded: %s  Blur: %s\nEyeOccluded: %s  %s\n" +
-                                            "MouthOccluded: %s  Noise: %s\nGlassesType: %s\nHeadPose: %s\nAccessories: %s",
-                                    face.faceAttributes.age,
-                                    face.faceAttributes.gender,
-                                    getHair(face.faceAttributes.hair),
-                                    getFacialHair(face.faceAttributes.facialHair),
-                                    getMakeup((face).faceAttributes.makeup),
-                                    getEmotion(face.faceAttributes.emotion),
-                                    face.faceAttributes.occlusion.foreheadOccluded,
-                                    face.faceAttributes.blur.blurLevel,
-                                    face.faceAttributes.occlusion.eyeOccluded,
-                                    face.faceAttributes.exposure.exposureLevel,
-                                    face.faceAttributes.occlusion.mouthOccluded,
-                                    face.faceAttributes.noise.noiseLevel,
-                                    face.faceAttributes.glasses,
-                                    getHeadPose(face.faceAttributes.headPose),
-                                    getAccessories(face.faceAttributes.accessories)
-                            );
-                            Log.d("DetectionActivity", face_description);
-//                        } catch (IOException e) {
-//                            // Show the exception when generating face thumbnail fails.
-////                            setInfo(e.getMessage());
-//                            Log.d("DetectionActivity", "error: " + e.getMessage());
-//                        }
-                    }
+                faces = Arrays.asList(result);
+                for (Face face : faces) {
+
+//                        DecimalFormat formatter = new DecimalFormat("#0.0");
+                    String face_description = String.format("Age: %s  Gender: %s\nHair: %s  FacialHair: %s\nMakeup: %s  %s\nForeheadOccluded: %s  Blur: %s\nEyeOccluded: %s  %s\n" +
+                                    "MouthOccluded: %s  Noise: %s\nGlassesType: %s\nHeadPose: %s\nAccessories: %s",
+                            face.faceAttributes.age,
+                            face.faceAttributes.gender,
+                            getHair(face.faceAttributes.hair),
+                            getFacialHair(face.faceAttributes.facialHair),
+                            getMakeup((face).faceAttributes.makeup),
+                            getEmotion(face.faceAttributes.emotion),
+                            face.faceAttributes.occlusion.foreheadOccluded,
+                            face.faceAttributes.blur.blurLevel,
+                            face.faceAttributes.occlusion.eyeOccluded,
+                            face.faceAttributes.exposure.exposureLevel,
+                            face.faceAttributes.occlusion.mouthOccluded,
+                            face.faceAttributes.noise.noiseLevel,
+                            face.faceAttributes.glasses,
+                            getHeadPose(face.faceAttributes.headPose),
+                            getAccessories(face.faceAttributes.accessories)
+                    );
+                    Log.d("DetectionActivity", face_description);
+
+                    // TODO: step 5 start 'UserActivity'
+                    Log.d("DetectionActivity", "prepare to start UserActivity");
+                    Intent intent = new Intent(this, UserActivity.class);
+//                    Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+//                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//                    byte[] byteArray = stream.toByteArray();
+//                    intent.putExtra("picture", byteArray);
+                    intent.putExtra("picture_uri", mImageUri.toString());
+                    intent.putExtra("age", String.valueOf(face.faceAttributes.age));
+                    Log.d("DetectionActivity", "age: " + face.faceAttributes.age);
+                    startActivity(intent);
                 }
 
 
             } else {
                 detectionResult = "0 face detected";
             }
-//            setInfo(detectionResult);
         }
 
         mImageUri = null;
@@ -328,22 +304,17 @@ public class DetectionActivity extends AppCompatActivity {
     }
 
     private String getHair(Hair hair) {
-        if (hair.hairColor.length == 0)
-        {
+        if (hair.hairColor.length == 0) {
             if (hair.invisible)
                 return "Invisible";
             else
                 return "Bald";
-        }
-        else
-        {
+        } else {
             int maxConfidenceIndex = 0;
             double maxConfidence = 0.0;
 
-            for (int i = 0; i < hair.hairColor.length; ++i)
-            {
-                if (hair.hairColor[i].confidence > maxConfidence)
-                {
+            for (int i = 0; i < hair.hairColor.length; ++i) {
+                if (hair.hairColor[i].confidence > maxConfidence) {
                     maxConfidence = hair.hairColor[i].confidence;
                     maxConfidenceIndex = i;
                 }
@@ -354,19 +325,15 @@ public class DetectionActivity extends AppCompatActivity {
     }
 
     private String getMakeup(Makeup makeup) {
-        return  (makeup.eyeMakeup || makeup.lipMakeup) ? "Yes" : "No" ;
+        return (makeup.eyeMakeup || makeup.lipMakeup) ? "Yes" : "No";
     }
 
     private String getAccessories(Accessory[] accessories) {
-        if (accessories.length == 0)
-        {
+        if (accessories.length == 0) {
             return "NoAccessories";
-        }
-        else
-        {
+        } else {
             String[] accessoriesList = new String[accessories.length];
-            for (int i = 0; i < accessories.length; ++i)
-            {
+            for (int i = 0; i < accessories.length; ++i) {
                 accessoriesList[i] = accessories[i].type.toString();
             }
 
@@ -378,55 +345,45 @@ public class DetectionActivity extends AppCompatActivity {
         return (facialHair.moustache + facialHair.beard + facialHair.sideburns > 0) ? "Yes" : "No";
     }
 
-    private String getEmotion(Emotion emotion)
-    {
+    private String getEmotion(Emotion emotion) {
         String emotionType = "";
         double emotionValue = 0.0;
-        if (emotion.anger > emotionValue)
-        {
+        if (emotion.anger > emotionValue) {
             emotionValue = emotion.anger;
             emotionType = "Anger";
         }
-        if (emotion.contempt > emotionValue)
-        {
+        if (emotion.contempt > emotionValue) {
             emotionValue = emotion.contempt;
             emotionType = "Contempt";
         }
-        if (emotion.disgust > emotionValue)
-        {
+        if (emotion.disgust > emotionValue) {
             emotionValue = emotion.disgust;
             emotionType = "Disgust";
         }
-        if (emotion.fear > emotionValue)
-        {
+        if (emotion.fear > emotionValue) {
             emotionValue = emotion.fear;
             emotionType = "Fear";
         }
-        if (emotion.happiness > emotionValue)
-        {
+        if (emotion.happiness > emotionValue) {
             emotionValue = emotion.happiness;
             emotionType = "Happiness";
         }
-        if (emotion.neutral > emotionValue)
-        {
+        if (emotion.neutral > emotionValue) {
             emotionValue = emotion.neutral;
             emotionType = "Neutral";
         }
-        if (emotion.sadness > emotionValue)
-        {
+        if (emotion.sadness > emotionValue) {
             emotionValue = emotion.sadness;
             emotionType = "Sadness";
         }
-        if (emotion.surprise > emotionValue)
-        {
+        if (emotion.surprise > emotionValue) {
             emotionValue = emotion.surprise;
             emotionType = "Surprise";
         }
         return String.format("%s: %f", emotionType, emotionValue);
     }
 
-    private String getHeadPose(HeadPose headPose)
-    {
+    private String getHeadPose(HeadPose headPose) {
         return String.format("Pitch: %s, Roll: %s, Yaw: %s", headPose.pitch, headPose.roll, headPose.yaw);
     }
 
