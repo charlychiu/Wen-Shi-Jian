@@ -2,12 +2,19 @@ package com.ncku.iir.wen_shi_jian;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.google.gson.JsonObject;
+import com.ncku.iir.wen_shi_jian.core.Global;
+import com.ncku.iir.wen_shi_jian.core.RetrofitRequest;
+
+import java.util.UUID;
 
 public class QuestionTypeActivity extends AppCompatActivity {
 
@@ -18,6 +25,7 @@ public class QuestionTypeActivity extends AppCompatActivity {
     int countdown = 10;
     int q_count = 1;
     int maxCorrect = 0;
+
 
     //layoout
     TextView timeView;
@@ -30,11 +38,12 @@ public class QuestionTypeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_type_page);
 
-        Intent intent = getIntent();
-        username = intent.getStringExtra("username");
-        topicId = intent.getIntExtra("topicId", 35);
-        q_count = intent.getIntExtra("q_count", 1);
-        maxCorrect = intent.getIntExtra("maxCorrect", 0);
+
+        username = Global.username;
+        topicId = Global.topic_id;
+        q_count = Global.q_count;
+        maxCorrect = Global.maxCorrect;
+
 
         Log.d("questionTypeActivity", username);
         Log.d("questionTypeActivity", String.valueOf(topicId));
@@ -57,17 +66,28 @@ public class QuestionTypeActivity extends AppCompatActivity {
         quesNumView = findViewById(R.id.quesNumView);
         quesNumView.setText("第"+String.valueOf(q_count)+"題");
 
-        goQuestion();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                // yourMethod();
+                goQuestion();
+            }
+        }, 1000);
+
+
 
     }
 
-    public  void goQuestion(){
-        Intent intent = new Intent(this, QuestionActivity.class);
-        intent.putExtra("username", username);
-        intent.putExtra("topicId", topicId);
-        intent.putExtra("q_count", 1);
-        intent.putExtra("maxCorrect", 0);
+    public void goQuestion(){
 
+
+
+        Intent intent = new Intent(this, QuestionActivity.class);
+//        intent.putExtra("username", username);
+//        intent.putExtra("topicId", topicId);
+//        intent.putExtra("q_count", 1);
+//        intent.putExtra("maxCorrect", 0);
         startActivity(intent);
     }
 
