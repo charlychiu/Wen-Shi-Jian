@@ -32,11 +32,13 @@ public class QuestionActivity extends AppCompatActivity {
     String C;
     String D;
     String answer;
-    int remainTime = 0;
+    int remainTime;
+    long timeleft;
 
     //layout
     TextView timeView;
     TextView questView;
+    TextView scoreView;
     Button buttonA;
     Button buttonB;
     Button buttonC;
@@ -89,14 +91,57 @@ public class QuestionActivity extends AppCompatActivity {
         questView = findViewById(R.id.questView);
         questView.setText(question);
 
+        scoreView = findViewById(R.id.scoreView);
+        scoreView.setText(String.valueOf(Global.score));
+
+        CountDownTimer countDownTimer = new CountDownTimer(countdown*1000+500, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeView.setText(String.valueOf(millisUntilFinished/1000));
+                remainTime = (int)millisUntilFinished/1000;
+                Log.d("score", "remain "+String.valueOf(remainTime));
+            }
+
+            @Override
+            public void onFinish() {
+                timeView.setText(String.valueOf(0));
+                if(q_count > 5){
+                    goFeedback();
+                }
+                else{
+                    // use answerRecord_uuid to get questions
+                    String url_q = "http://140.116.247.161:8888/questionnaire/new_selectionQuestion/";
+                    final JsonObject getQuestiontask = new JsonObject();
+                    getQuestiontask.addProperty("state","select");
+                    getQuestiontask.addProperty("answerRecord_uuid", Global.answerRecord_uuid);
+                    RetrofitRequest RequestAPI  = RetrofitRequest.getInstance();
+                    RequestAPI.questionSelectResponse(url_q, getQuestiontask);
+                    //jump activity
+                    goQuestionType();
+                }
+            }
+        }.start();
+
         buttonA = findViewById(R.id.buttonA);
         buttonA.setText(A);
         buttonA.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                countDownTimer.cancel();
+                //countDownTimer.onFinish();
                 handleAnswer("A");
                 if(answer.equals("A")||answer.equals("a")){
                     buttonA.setBackgroundColor(Color.GREEN);
+
+                    if(topicId == 35) {
+                        remainTime = Integer.parseInt((String) timeView.getText());
+                        Global.score += 100+10*remainTime;
+                        Log.d("score", "remainTime "+String.valueOf(remainTime));
+                    }
+                    else{
+                        Global.score += 200+160*(remainTime);
+                    }
+                    scoreView.setText(String.valueOf(Global.score));
                 }
                 else {
                     buttonA.setBackgroundColor(Color.RED);
@@ -144,9 +189,20 @@ public class QuestionActivity extends AppCompatActivity {
         buttonB.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                countDownTimer.cancel();
+                //countDownTimer.onFinish();
                 handleAnswer("B");
                 if(answer.equals("B")||answer.equals("b")){
                     buttonB.setBackgroundColor(Color.GREEN);
+                    if(topicId == 35) {
+                        remainTime = Integer.parseInt((String) timeView.getText());
+                        Global.score += 100+10*remainTime;
+                        Log.d("score", "remainTime "+String.valueOf(remainTime));
+                    }
+                    else{
+                        Global.score += 200+160*(remainTime);
+                    }
+                    scoreView.setText(String.valueOf(Global.score));
                 }
                 else {
                     buttonB.setBackgroundColor(Color.RED);
@@ -195,9 +251,20 @@ public class QuestionActivity extends AppCompatActivity {
         buttonC.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                countDownTimer.cancel();
+                //countDownTimer.onFinish();
                 handleAnswer("C");
                 if(answer.equals("C")||answer.equals("c")){
                     buttonC.setBackgroundColor(Color.GREEN);
+                    if(topicId == 35) {
+                        remainTime = Integer.parseInt((String) timeView.getText());
+                        Global.score += 100+10*remainTime;
+                        Log.d("score", "remainTime "+String.valueOf(remainTime));
+                    }
+                    else{
+                        Global.score += 200+160*(remainTime);
+                    }
+                    scoreView.setText(String.valueOf(Global.score));
                 }
                 else {
                     buttonC.setBackgroundColor(Color.RED);
@@ -246,9 +313,20 @@ public class QuestionActivity extends AppCompatActivity {
         buttonD.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                countDownTimer.cancel();
+                //countDownTimer.onFinish();
                 handleAnswer("D");
                 if(answer.equals("D")||answer.equals("d")){
                     buttonD.setBackgroundColor(Color.GREEN);
+                    if(topicId == 35) {
+                        remainTime = Integer.parseInt((String) timeView.getText());
+                        Global.score += 100+10*remainTime;
+                        Log.d("score", "remainTime "+String.valueOf(remainTime));
+                    }
+                    else{
+                        Global.score += 200+160*(remainTime);
+                    }
+                    scoreView.setText(String.valueOf(Global.score));
                 }
                 else {
                     buttonD.setBackgroundColor(Color.RED);
@@ -295,18 +373,7 @@ public class QuestionActivity extends AppCompatActivity {
 
 
 
-        CountDownTimer countDownTimer = new CountDownTimer(countdown*1000+500, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timeView.setText(String.valueOf(millisUntilFinished/1000));
-                remainTime = (int)millisUntilFinished/1000;
-            }
 
-            @Override
-            public void onFinish() {
-                timeView.setText(String.valueOf(0));
-            }
-        }.start();
 
     }
 

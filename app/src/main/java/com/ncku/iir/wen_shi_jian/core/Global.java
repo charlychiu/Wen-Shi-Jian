@@ -22,6 +22,7 @@ public class Global {
     public static String question = "";
     public static String answer = "";
     public static int score = 0;
+    public static int remainTime = 0;
 
 
     // for feedback
