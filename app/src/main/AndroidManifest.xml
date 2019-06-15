@@ -17,6 +17,10 @@
         <activity android:name=".UserActivity"></activity>
         <activity android:name=".SelectImageActivity" />
         <activity android:name=".DetectionActivity" />
+        <activity android:name=".QuestionLevelActivity" />
+        <activity android:name=".QuestionTypeActivity" />
+        <activity android:name=".QuestionActivity" />
+        <activity android:name=".FeedbackActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
