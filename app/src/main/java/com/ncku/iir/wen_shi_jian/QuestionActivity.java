@@ -139,7 +139,7 @@ public class QuestionActivity extends AppCompatActivity {
                         Log.d("score", "remainTime "+String.valueOf(remainTime));
                     }
                     else{
-                        Global.score += 200+160*(remainTime);
+                        Global.score += 200+16*(remainTime);
                     }
                     scoreView.setText(String.valueOf(Global.score));
                 }
@@ -200,7 +200,7 @@ public class QuestionActivity extends AppCompatActivity {
                         Log.d("score", "remainTime "+String.valueOf(remainTime));
                     }
                     else{
-                        Global.score += 200+160*(remainTime);
+                        Global.score += 200+16*(remainTime);
                     }
                     scoreView.setText(String.valueOf(Global.score));
                 }
@@ -262,7 +262,7 @@ public class QuestionActivity extends AppCompatActivity {
                         Log.d("score", "remainTime "+String.valueOf(remainTime));
                     }
                     else{
-                        Global.score += 200+160*(remainTime);
+                        Global.score += 200+16*(remainTime);
                     }
                     scoreView.setText(String.valueOf(Global.score));
                 }
@@ -324,7 +324,7 @@ public class QuestionActivity extends AppCompatActivity {
                         Log.d("score", "remainTime "+String.valueOf(remainTime));
                     }
                     else{
-                        Global.score += 200+160*(remainTime);
+                        Global.score += 200+16*(remainTime);
                     }
                     scoreView.setText(String.valueOf(Global.score));
                 }

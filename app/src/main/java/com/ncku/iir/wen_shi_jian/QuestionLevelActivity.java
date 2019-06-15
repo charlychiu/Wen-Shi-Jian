@@ -68,7 +68,7 @@ public class QuestionLevelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 //hard
-                Global.topic_id = 35;
+                Global.topic_id = 36;
                 goQuestionType(36);
             }
 
