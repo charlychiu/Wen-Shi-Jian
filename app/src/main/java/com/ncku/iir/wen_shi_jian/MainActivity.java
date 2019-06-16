@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
 //        DatabaseReference myRef = database.getReference("score");
 //        myRef.child("username").setValue("reward");
 
-        Intent intent = new Intent(this, LeaderBoardActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, LeaderBoardActivity.class);
+//        startActivity(intent);
 
     }
 
