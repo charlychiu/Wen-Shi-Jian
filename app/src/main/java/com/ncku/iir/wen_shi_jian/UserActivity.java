@@ -1,5 +1,6 @@
 package com.ncku.iir.wen_shi_jian;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -54,6 +55,9 @@ public class UserActivity extends AppCompatActivity {
         mPreferences.edit().putString("username", userInputName).apply();
         mPreferences.edit().putString("age", userInputAge).apply();
 
+        Intent intent = new Intent(this, QuestionLevelActivity.class);
+        intent.putExtra("username", userInputName);
+        startActivity(intent);
 
     }
 }

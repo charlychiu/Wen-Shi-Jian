@@ -50,6 +50,7 @@ public class FeedbackActivity extends AppCompatActivity {
     }
 
     public void goLeaderBroad(){
-
+        Intent intent = new Intent(this, LeaderBoardActivity.class);
+        startActivity(intent);
     }
 }

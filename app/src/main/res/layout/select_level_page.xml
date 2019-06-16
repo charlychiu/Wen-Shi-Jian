@@ -7,8 +7,12 @@
 
     <ImageButton
         android:id="@+id/simpleButton"
-        android:layout_width="630dp"
-        android:layout_height="match_parent"
+        android:layout_width="512dp"
+        android:layout_height="wrap_content"
+
+        android:background="@android:color/transparent"
+
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -16,8 +20,12 @@
 
     <ImageButton
         android:id="@+id/hardButton"
-        android:layout_width="630dp"
+        android:layout_width="512dp"
         android:layout_height="match_parent"
+
+
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

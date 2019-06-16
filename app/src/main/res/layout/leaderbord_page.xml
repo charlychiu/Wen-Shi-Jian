@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bgother"
+    android:scaleType="centerInside">
 
 
     <LinearLayout
@@ -22,7 +24,7 @@
             android:id="@+id/firstView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_orange_dark"
+            android:background="@android:color/holo_red_light"
             android:gravity="left"
             android:text="第 1 名"
             android:textColor="@android:color/white"
@@ -42,7 +44,7 @@
             android:id="@+id/thirdView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@android:color/holo_red_light"
             android:gravity="left"
             android:text="第 3 名"
             android:textColor="@android:color/white"
@@ -103,6 +105,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="繼續挑戰"
+            android:background="@drawable/option_circle"
             android:textSize="50dp" />
 
         <Button
@@ -113,6 +116,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="回首頁"
+            android:background="@drawable/option_circle"
             android:textSize="50dp" />
 
 

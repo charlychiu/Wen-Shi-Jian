@@ -3,16 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bgother"
+    android:scaleType="centerInside">
 
     <TextView
         android:id="@+id/timeView"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginTop="60dp"
-        android:background="@android:drawable/presence_invisible"
-        android:paddingHorizontal="@android:dimen/app_icon_size"
-        android:paddingVertical="@android:dimen/app_icon_size"
+        android:gravity="center"
+        android:background="@drawable/whit_circle"
+        android:textColor="@android:color/black"
         android:text="秒數"
         android:textSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,9 +27,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="60dp"
-        android:background="@android:drawable/btn_default_small"
-        android:paddingHorizontal="@android:dimen/app_icon_size"
-        android:paddingVertical="@android:dimen/app_icon_size"
+        android:textColor="@android:color/holo_red_light"
         android:text="分數"
         android:textSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:text="題目內容"
-        android:textSize="50dp"
+        android:textColor="@android:color/holo_orange_light"
+        android:textSize="40dp"
         android:gravity="left"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -69,7 +70,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="optionA"
-            android:textSize="50dp" />
+            android:background="@drawable/option_circle"
+            android:textSize="40dp" />
 
         <Button
             android:id="@+id/buttonB"
@@ -79,7 +81,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="optionB"
-            android:textSize="50dp" />
+            android:background="@drawable/option_circle"
+            android:textSize="40dp" />
 
 
     </LinearLayout>
@@ -104,7 +107,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="optionC"
-            android:textSize="50dp" />
+            android:background="@drawable/option_circle"
+            android:textSize="40dp" />
 
         <Button
             android:id="@+id/buttonD"
@@ -114,7 +118,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="optionD"
-            android:textSize="50dp" />
+            android:background="@drawable/option_circle"
+            android:textSize="40dp" />
 
 
     </LinearLayout>
