@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.microsoft.projectoxford.face.FaceServiceClient;
 import com.microsoft.projectoxford.face.contract.Emotion;
@@ -147,6 +148,8 @@ public class DetectionActivity extends AppCompatActivity {
     // Progress dialog popped up when communicating with server.
     ProgressDialog mProgressDialog;
 
+    TextView alertTextView;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +158,18 @@ public class DetectionActivity extends AppCompatActivity {
 
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setTitle("Progress Dialog");
+
+        imageView = (ImageView) findViewById(R.id.image);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertTextView.setVisibility(View.INVISIBLE);
+                selectImage();
+            }
+        });
+
+        alertTextView = (TextView)findViewById(R.id.alertTextView);
+        alertTextView.setVisibility(View.INVISIBLE);
 
         // TODO: step 2. open camera, take picture
         selectImage(); // Take picture from user
@@ -183,7 +198,6 @@ public class DetectionActivity extends AppCompatActivity {
                 if (mBitmap != null) {
                     Log.d("DetectionActivity", "mBitmap is not null --> correct");
                     // Show the image on screen.
-                    ImageView imageView = (ImageView) findViewById(R.id.image);
                     imageView.setImageBitmap(mBitmap);
 
                     Log.d("DetectionActivity", "Image: " + mImageUri + " resized to " + mBitmap.getWidth()
@@ -240,6 +254,19 @@ public class DetectionActivity extends AppCompatActivity {
             // The information about the detection result.
             String detectionResult;
             if (result != null) {
+                Log.d("DetectionActivity", "Get at least one face above");
+                Log.d("DetectionActivity", "Get face detection count: " + result.length);
+
+                // Control alert display
+                alertTextView.setVisibility(View.INVISIBLE);
+                if (result.length == 0) {
+//                    displayToast("No face detected, please try again");
+                    alertTextView.setVisibility(View.VISIBLE);
+                } else {
+                    alertTextView.setVisibility(View.INVISIBLE);
+                }
+
+
                 detectionResult = result.length + " face"
                         + (result.length != 1 ? "s" : "") + " detected";
                 Log.d("DetectionActivity", "detectionResult outer Task: " + detectionResult);
@@ -386,5 +413,16 @@ public class DetectionActivity extends AppCompatActivity {
     private String getHeadPose(HeadPose headPose) {
         return String.format("Pitch: %s, Roll: %s, Yaw: %s", headPose.pitch, headPose.roll, headPose.yaw);
     }
+
+    /**
+     * Displays a Toast with the message.
+     *
+     * @param message Message to display
+     */
+    public void displayToast(String message) {
+        Toast.makeText(getApplicationContext(), message,
+                Toast.LENGTH_SHORT).show();
+    }
+
 
 }
