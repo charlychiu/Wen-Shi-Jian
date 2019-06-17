@@ -1,4 +1,4 @@
-package com.example.alarmmanager;
+package com.ncku.iir.wen_shi_jian.core;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -6,6 +6,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+
+import com.ncku.iir.wen_shi_jian.MainActivity;
+import com.ncku.iir.wen_shi_jian.R;
 
 /**
  * Broadcast receiver for the alarm, which delivers the notification.
@@ -50,9 +53,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         // Build the notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder
                 (context, PRIMARY_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle(context.getString(R.string.notification_title))
-                .setContentText(context.getString(R.string.notification_text))
+                .setSmallIcon(R.drawable.small)
+                .setContentTitle("下午3點昏昏欲睡，來問世間醒醒腦子吧")
+                .setContentText("")
                 .setContentIntent(contentPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
