@@ -109,7 +109,7 @@
             android:textSize="50dp" />
 
         <Button
-            android:id="@+id/nextBbutton"
+            android:id="@+id/nextButton"
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="50dp"
