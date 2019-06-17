@@ -12,7 +12,7 @@ public class Global {
 
     // for shi jian
     public static int q_count = 0;
-    public static int  maxCorrect = 0;
+    public static int  correct_count = 0;
     public static String username;
     public static String A = " ";
     public static String B = " ";
@@ -22,6 +22,7 @@ public class Global {
     public static String question = "";
     public static String answer = "";
     public static int score = 0;
+    public static String line_user_uuid = "";
     public static int remainTime = 0;
 
 

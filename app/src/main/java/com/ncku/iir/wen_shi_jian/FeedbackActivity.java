@@ -22,6 +22,8 @@ public class FeedbackActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.feedback_page);
 
+        Log.d("feed", "user "+ Global.line_user_uuid);
+
         scoreView = findViewById(R.id.scoreView);
         scoreView.setText("分數 : "+String.valueOf(Global.score));
 
@@ -29,6 +31,7 @@ public class FeedbackActivity extends AppCompatActivity {
         againButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Continue
                 goQuestionLevel();
             }
         });
@@ -45,7 +48,7 @@ public class FeedbackActivity extends AppCompatActivity {
 
     public void goQuestionLevel(){
         Intent intent = new Intent(this, QuestionLevelActivity.class);
-        intent.putExtra("username", Global.username);
+        intent.putExtra("isContinue", 1);
         startActivity(intent);
     }
 

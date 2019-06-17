@@ -24,7 +24,7 @@ public class QuestionTypeActivity extends AppCompatActivity {
     int topicId = 35;
     int countdown = 10;
     int q_count = 1;
-    int maxCorrect = 0;
+    int correct_count = 0;
 
 
     //layoout
@@ -42,13 +42,13 @@ public class QuestionTypeActivity extends AppCompatActivity {
         username = Global.username;
         topicId = Global.topic_id;
         q_count = Global.q_count;
-        maxCorrect = Global.maxCorrect;
+        correct_count = Global.correct_count;
 
 
         Log.d("questionTypeActivity", username);
         Log.d("questionTypeActivity", String.valueOf(topicId));
         Log.d("questionTypeActivity", String.valueOf(q_count));
-        Log.d("questionTypeActivity", String.valueOf(maxCorrect));
+        Log.d("questionTypeActivity", String.valueOf(correct_count));
 
         if(topicId == 35){
             // easy
@@ -84,10 +84,6 @@ public class QuestionTypeActivity extends AppCompatActivity {
 
 
         Intent intent = new Intent(this, QuestionActivity.class);
-//        intent.putExtra("username", username);
-//        intent.putExtra("topicId", topicId);
-//        intent.putExtra("q_count", 1);
-//        intent.putExtra("maxCorrect", 0);
         startActivity(intent);
     }
 

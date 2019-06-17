@@ -24,7 +24,7 @@ public class QuestionActivity extends AppCompatActivity {
     int topicId = 35;
     int countdown = 10;
     int q_count = 1;
-    int maxCorrect = 0;
+    int correct_count = 0;
 
     String question;
     String A;
@@ -50,16 +50,10 @@ public class QuestionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_page);
 
-//        Intent intent = getIntent();
-//        username = intent.getStringExtra("username");
-//        topicId = intent.getIntExtra("topicId", 35);
-//        q_count = intent.getIntExtra("q_count", 1);
-//        maxCorrect = intent.getIntExtra("maxCorrect", 0);
-
         username = Global.username;
         topicId = Global.topic_id;
         q_count = Global.q_count;
-        maxCorrect = Global.maxCorrect;
+        correct_count = Global.correct_count;
         question = Global.question;
         A = Global.A;
         B = Global.B;
@@ -73,7 +67,7 @@ public class QuestionActivity extends AppCompatActivity {
         Log.d("questionActivity", username);
         Log.d("questionActivity", String.valueOf(topicId));
         Log.d("questionActivity", String.valueOf(q_count));
-        Log.d("questionActivity", String.valueOf(maxCorrect));
+        Log.d("questionActivity", String.valueOf(correct_count));
 
         if(topicId == 35){
             // easy
@@ -94,7 +88,7 @@ public class QuestionActivity extends AppCompatActivity {
         scoreView = findViewById(R.id.scoreView);
         scoreView.setText(String.valueOf(Global.score));
 
-        CountDownTimer countDownTimer = new CountDownTimer(countdown*1000+500, 1000) {
+        final CountDownTimer countDownTimer = new CountDownTimer(countdown*1000+500, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeView.setText(String.valueOf(millisUntilFinished/1000));
@@ -132,7 +126,8 @@ public class QuestionActivity extends AppCompatActivity {
                 handleAnswer("A");
                 if(answer.equals("A")||answer.equals("a")){
                     buttonA.setBackgroundColor(Color.GREEN);
-
+                    Global.correct_count += 1;
+                    correct_count += 1;
                     if(topicId == 35) {
                         remainTime = Integer.parseInt((String) timeView.getText());
                         Global.score += 100+10*remainTime;
@@ -194,6 +189,8 @@ public class QuestionActivity extends AppCompatActivity {
                 handleAnswer("B");
                 if(answer.equals("B")||answer.equals("b")){
                     buttonB.setBackgroundColor(Color.GREEN);
+                    Global.correct_count += 1;
+                    correct_count += 1;
                     if(topicId == 35) {
                         remainTime = Integer.parseInt((String) timeView.getText());
                         Global.score += 100+10*remainTime;
@@ -256,6 +253,8 @@ public class QuestionActivity extends AppCompatActivity {
                 handleAnswer("C");
                 if(answer.equals("C")||answer.equals("c")){
                     buttonC.setBackgroundColor(Color.GREEN);
+                    Global.correct_count += 1;
+                    correct_count += 1;
                     if(topicId == 35) {
                         remainTime = Integer.parseInt((String) timeView.getText());
                         Global.score += 100+10*remainTime;
@@ -318,6 +317,8 @@ public class QuestionActivity extends AppCompatActivity {
                 handleAnswer("D");
                 if(answer.equals("D")||answer.equals("d")){
                     buttonD.setBackgroundColor(Color.GREEN);
+                    Global.correct_count += 1;
+                    correct_count += 1;
                     if(topicId == 35) {
                         remainTime = Integer.parseInt((String) timeView.getText());
                         Global.score += 100+10*remainTime;

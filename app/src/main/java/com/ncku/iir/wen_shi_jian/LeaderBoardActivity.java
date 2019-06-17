@@ -1,9 +1,12 @@
 package com.ncku.iir.wen_shi_jian;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +30,10 @@ public class LeaderBoardActivity extends AppCompatActivity {
     TextView firstView;
     TextView secondView;
     TextView thirdView;
+
+    Button againButton;
+    Button nextButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +42,22 @@ public class LeaderBoardActivity extends AppCompatActivity {
         firstView = (TextView)findViewById(R.id.firstView);
         secondView = (TextView)findViewById(R.id.secondView);
         thirdView = (TextView)findViewById(R.id.thirdView);
+
+        againButton = findViewById(R.id.againButton);
+        againButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Continue
+                goQuestionLevel();
+            }
+        });
+        nextButton = findViewById(R.id.nextButton);
+        nextButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goMain();
+            }
+        });
 
         getAllDataFromFirebase();
     }
@@ -97,5 +120,16 @@ public class LeaderBoardActivity extends AppCompatActivity {
             temp.put(aa.getKey(), aa.getValue());
         }
         return temp;
+    }
+
+    public void goQuestionLevel(){
+        Intent intent = new Intent(this, QuestionLevelActivity.class);
+        intent.putExtra("isContinue", 1);
+        startActivity(intent);
+    }
+
+    public void goMain(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
