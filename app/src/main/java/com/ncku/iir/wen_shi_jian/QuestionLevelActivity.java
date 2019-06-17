@@ -1,6 +1,7 @@
 package com.ncku.iir.wen_shi_jian;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -31,9 +32,11 @@ public class QuestionLevelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_level_page);
 
-        Intent intent = getIntent();
-        username = intent.getStringExtra("username");
+        SharedPreferences mPreferences = com.ncku.iir.wen_shi_jian.Global.getPrefInstance();
+        username = mPreferences.getString("username", "Wen-Shi-Jian");// intent.getStringExtra("username");
         Global.username = username;
+
+        Intent intent = getIntent();
         try {
             isContinue = intent.getIntExtra("isContinue", 0);
         }catch (NullPointerException e ){
@@ -41,15 +44,18 @@ public class QuestionLevelActivity extends AppCompatActivity {
         }
         if(isContinue == 0){
             line_user_uuid = UUID.randomUUID().toString();
+            Global.line_user_uuid = line_user_uuid;
         }
         else {
-            line_user_uuid = intent.getStringExtra("line_user_uuid");
+            line_user_uuid = Global.line_user_uuid;
         }
 
         Log.d("q_level", username);
+        Log.d("q_level", String.valueOf(isContinue));
+        Log.d("q_level", "user "+ Global.line_user_uuid);
 
         Global.q_count = 1;
-        Global.maxCorrect = 0;
+        Global.correct_count = 0;
         Global.score = 0;
 
         simpleImgBtn = findViewById(R.id.simpleButton);
