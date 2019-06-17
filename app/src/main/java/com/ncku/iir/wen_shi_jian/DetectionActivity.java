@@ -316,10 +316,10 @@ public class DetectionActivity extends AppCompatActivity {
 //                    intent.putExtra("picture", byteArray);
                     intent.putExtra("picture_uri", mImageUri.toString());
                     intent.putExtra("age", String.valueOf(face.faceAttributes.age));
+                    intent.putExtra("gender", face.faceAttributes.gender);
                     Log.d("DetectionActivity", "age: " + face.faceAttributes.age);
                     startActivity(intent);
                 }
-
 
             } else {
                 detectionResult = "0 face detected";

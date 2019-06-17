@@ -30,6 +30,7 @@ public class UserActivity extends AppCompatActivity {
         if (extras != null) {
             String imageUri = extras.getString("picture_uri");
             String age = extras.getString("age");
+            String gender = extras.getString("gender");
 
             userView = (ImageView) findViewById(R.id.userView);
             userView.setImageURI(Uri.parse(imageUri));
@@ -42,6 +43,14 @@ public class UserActivity extends AppCompatActivity {
                 ageText.setText(String.valueOf(Math.round(Float.parseFloat(age))));
             }
 
+            if (gender != null) {
+                if (gender.equals("male")) {
+                    nameText.setText("HowHow");
+                }
+                if (gender.equals("female")) {
+                    nameText.setText("FU");
+                }
+            }
         }
     }
 
