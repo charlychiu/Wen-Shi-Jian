@@ -45,40 +45,46 @@ public class ShijianActivity extends AppCompatActivity {
 
     public void setImage(int num){
         if (num==5){
-            Glide.with(getApplicationContext())
-                    .load(R.drawable.best)
-                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
-                    .into(imageview);
+//            Glide.with(getApplicationContext())
+//                    .load(R.drawable.best)
+//                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+//                    .into(imageview);
+            imageview.setImageResource(R.drawable.best);
         }
         else if (num==4){
-            Glide.with(getApplicationContext())
-                    .load(R.drawable.second)
-                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
-                    .into(imageview);
+//            Glide.with(getApplicationContext())
+//                    .load(R.drawable.second)
+//                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+//                    .into(imageview);
+            imageview.setImageResource(R.drawable.second);
         }
         else if (num==3){
-            Glide.with(getApplicationContext())
-                    .load(R.drawable.sofarsogood)
-                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
-                    .into(imageview);
+//            Glide.with(getApplicationContext())
+//                    .load(R.drawable.sofarsogood)
+//                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+//                    .into(imageview);
+            imageview.setImageResource(R.drawable.sofarsogood);
         }
         else if (num==2){
-            Glide.with(getApplicationContext())
-                    .load(R.drawable.savesoul)
-                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
-                    .into(imageview);
+//            Glide.with(getApplicationContext())
+//                    .load(R.drawable.savesoul)
+//                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+//                    .into(imageview);
+            imageview.setImageResource(R.drawable.savesoul);
         }
         else if (num==1){
-            Glide.with(getApplicationContext())
-                    .load(R.drawable.sj01)
-                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
-                    .into(imageview);
+//            Glide.with(getApplicationContext())
+//                    .load(R.drawable.sj01)
+//                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+//                    .into(imageview);
+            imageview.setImageResource(R.drawable.sj01);
         }
         else if (num==0){
-            Glide.with(getApplicationContext())
-                    .load(R.drawable.wrong)
-                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
-                    .into(imageview);
+//            Glide.with(getApplicationContext())
+//                    .load(R.drawable.wrong)
+//                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+//                    .into(imageview);
+            imageview.setImageResource(R.drawable.wrong);
         }
     }
 }
