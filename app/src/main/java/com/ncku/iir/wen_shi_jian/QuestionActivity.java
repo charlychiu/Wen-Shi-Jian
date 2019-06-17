@@ -379,7 +379,8 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     public void goFeedback(){
-        Intent intent = new Intent(this, FeedbackActivity.class);
+//        Intent intent = new Intent(this, FeedbackActivity.class);
+        Intent intent = new Intent(this, ShijianActivity.class);
         startActivity(intent);
 
     }
