@@ -88,6 +88,11 @@ public class QuestionActivity extends AppCompatActivity {
         scoreView = findViewById(R.id.scoreView);
         scoreView.setText(String.valueOf(Global.score));
 
+        buttonA = findViewById(R.id.buttonA);
+        buttonB = findViewById(R.id.buttonB);
+        buttonC = findViewById(R.id.buttonC);
+        buttonD = findViewById(R.id.buttonD);
+
         final CountDownTimer countDownTimer = new CountDownTimer(countdown*1000+500, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -99,6 +104,22 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 timeView.setText(String.valueOf(0));
+                switch (answer){
+                    case "A":
+                        buttonA.setBackgroundColor(Color.GREEN);
+                        break;
+                    case "B":
+                        buttonB.setBackgroundColor(Color.GREEN);
+                        break;
+                    case "C":
+                        buttonC.setBackgroundColor(Color.GREEN);
+                        break;
+                    case "D":
+                        buttonD.setBackgroundColor(Color.GREEN);
+                    default:
+                        Log.d("Question", "no match Answer");
+
+                }
                 if(q_count > 5){
                     goFeedback();
                 }
@@ -116,7 +137,7 @@ public class QuestionActivity extends AppCompatActivity {
             }
         }.start();
 
-        buttonA = findViewById(R.id.buttonA);
+
         buttonA.setText(A);
         buttonA.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -179,7 +200,7 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });
 
-        buttonB = findViewById(R.id.buttonB);
+
         buttonB.setText(B);
         buttonB.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -243,7 +264,7 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });
 
-        buttonC = findViewById(R.id.buttonC);
+
         buttonC.setText(C);
         buttonC.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -307,7 +328,7 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });
 
-        buttonD = findViewById(R.id.buttonD);
+
         buttonD.setText(D);
         buttonD.setOnClickListener(new Button.OnClickListener() {
             @Override
