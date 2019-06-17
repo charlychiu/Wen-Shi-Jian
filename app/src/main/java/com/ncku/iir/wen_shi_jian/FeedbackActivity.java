@@ -60,6 +60,8 @@ public class FeedbackActivity extends AppCompatActivity {
                     if (Global.score > score) {
                         myRef.child(tmpUserName).setValue(Global.score);
                     }
+                } else {
+                    myRef.child(tmpUserName).setValue(Global.score);
                 }
 
             }
