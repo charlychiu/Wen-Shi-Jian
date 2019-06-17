@@ -48,7 +48,7 @@ public class UserActivity extends AppCompatActivity {
                     nameText.setText("HowHow");
                 }
                 if (gender.equals("female")) {
-                    nameText.setText("FU");
+                    nameText.setText("A FU");
                 }
             }
         }

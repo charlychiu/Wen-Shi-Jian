@@ -109,7 +109,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
                     int value = entry.getValue();
                     Log.d("LeaderBoardActivity", "Order from map: " + key + " " + value);
                     currentRankCount += 1;
-                    if (userCurrentScore == value) {
+                    if (userCurrentScore >= value) {
                         userCurrentRank = currentRankCount;
                         break;
                     }
@@ -117,6 +117,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
                 String currentString = String.format("此次排名 %d/%d", userCurrentRank ,totalRankCount);
                 currentView.setText(currentString);
 
+                // Find best score by user name from DB
                 SharedPreferences mPreferences = com.ncku.iir.wen_shi_jian.Global.getPrefInstance();
                 String tmpUserName = mPreferences.getString("username", "Not Value");
                 currentRankCount = 0;
@@ -124,7 +125,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
                 for (Map.Entry<String, Integer> entry : newMap.entrySet()) {
                     String key = entry.getKey();
                     int value = entry.getValue();
-                    Log.d("LeaderBoardActivity", "Order from map: " + key + " " + value);
+//                    Log.d("LeaderBoardActivity", "Order from map: " + key + " " + value);
                     currentRankCount += 1;
                     if (tmpUserName.equals(key)) {
                         userCurrentRank = currentRankCount;
