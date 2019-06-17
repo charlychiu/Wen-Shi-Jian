@@ -1,6 +1,6 @@
 # Project: Wen-Shi-Jian
 
-## apk path: 
+## apk path: [APK](./app/release/app-release.apk)
 
 ## Tools
 - Android Studio
