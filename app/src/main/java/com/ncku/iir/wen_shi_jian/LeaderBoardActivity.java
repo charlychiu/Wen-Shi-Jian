@@ -114,6 +114,9 @@ public class LeaderBoardActivity extends AppCompatActivity {
                         break;
                     }
                 }
+                if (userCurrentRank == -1) {
+                    userCurrentRank = totalRankCount;
+                }
                 String currentString = String.format("此次排名 %d/%d", userCurrentRank ,totalRankCount);
                 currentView.setText(currentString);
 
