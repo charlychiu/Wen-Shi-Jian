@@ -43,6 +43,10 @@ public class LeaderBoardActivity extends AppCompatActivity {
         secondView = (TextView)findViewById(R.id.secondView);
         thirdView = (TextView)findViewById(R.id.thirdView);
 
+        firstView.setText("第一名: Loading...");
+        secondView.setText("第二名: Loading...");
+        thirdView.setText("第三名: Loading...");
+
         againButton = findViewById(R.id.againButton);
         againButton.setOnClickListener(new Button.OnClickListener() {
             @Override
