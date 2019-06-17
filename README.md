@@ -7,7 +7,9 @@
 
 ## Libraries
 - Firebase Realtime Database
+- Crashlytics
 - Retrofit
+- glide
 - android-gif-drawable
 
 ## Platform
