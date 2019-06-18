@@ -71,7 +71,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         // music play
         sound = new Sound(getBaseContext());
-        sound.changeAndPlayMusic();
+        sound.changeAndPlayMusic("time");
 
         username = Global.username;
         topicId = Global.topic_id;

@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import com.google.gson.JsonObject;
 import com.ncku.iir.wen_shi_jian.core.Global;
 import com.ncku.iir.wen_shi_jian.core.RetrofitRequest;
+import com.ncku.iir.wen_shi_jian.core.Sound;
 
 import java.util.UUID;
 
@@ -26,6 +27,8 @@ public class QuestionLevelActivity extends AppCompatActivity {
     String line_user_uuid;
     String line_user_email = "iir_android@gmail.com";
 
+    // set music
+    Sound sound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,10 @@ public class QuestionLevelActivity extends AppCompatActivity {
             line_user_uuid = Global.line_user_uuid;
         }
 
+        // music play
+        sound = new Sound(getBaseContext());
+        sound.changeAndPlayMusic("budda");
+
         Log.d("q_level", username);
         Log.d("q_level", String.valueOf(isContinue));
         Log.d("q_level", "user "+ Global.line_user_uuid);
@@ -63,6 +70,7 @@ public class QuestionLevelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 //easy
+                sound.recyle();
                 Global.topic_id = 35;
                 goQuestionType(35);
             }
@@ -74,6 +82,7 @@ public class QuestionLevelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 //hard
+                sound.recyle();
                 Global.topic_id = 36;
                 goQuestionType(36);
             }

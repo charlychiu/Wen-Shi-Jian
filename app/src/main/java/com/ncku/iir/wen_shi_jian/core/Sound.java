@@ -23,7 +23,7 @@ public class Sound {
     public  Sound(Context c)
     {
         context = c;
-        initMusic();
+        initMusic("budda");
 //        initSound();
     }
 
@@ -37,10 +37,19 @@ public class Sound {
 //    }
 
     //初始化音樂播放器
-    private static void initMusic()
+    private static void initMusic(String filename)
     {
 //        int r = new Random().nextInt(musicId.length);
-        music = MediaPlayer.create(context,R.raw.time);
+        int currentfile = 0;
+        if (filename.contains("time")){
+            currentfile = R.raw.time;
+        }else if(filename.contains("john")){
+            currentfile = R.raw.johncena;
+        }else if(filename.contains("budda")){
+        currentfile = R.raw.budda;
+        }
+
+        music = MediaPlayer.create(context,currentfile);
         music.setLooping(true);
     }
 
@@ -61,11 +70,11 @@ public class Sound {
     /**
      * 切換一首音樂並播放
      */
-    public static void changeAndPlayMusic()
+    public static void changeAndPlayMusic(String currentmusic)
     {
         if(music != null)
             music.release();
-        initMusic();
+        initMusic(currentmusic);
         setMusicSt(true);
     }
 

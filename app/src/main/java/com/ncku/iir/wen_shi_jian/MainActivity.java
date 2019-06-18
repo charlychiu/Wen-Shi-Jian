@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.SoundPool;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.view.View;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ncku.iir.wen_shi_jian.core.AlarmReceiver;
+import com.ncku.iir.wen_shi_jian.core.Sound;
 
 import java.util.Calendar;
 
@@ -25,10 +27,17 @@ public class MainActivity extends AppCompatActivity {
     private static final int NOTIFICATION_ID = 0;
     private static final String PRIMARY_CHANNEL_ID = "primary_notification_channel";
 
+    // set music
+    Sound sound;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_page);
+
+        // music play
+        sound = new Sound(getBaseContext());
+        sound.changeAndPlayMusic("budda");
 
         //Init SharedPreferences
         // pref usage
@@ -99,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO: step 1. click 'start' button
     public void detection(View view) {
+        sound.recyle();
         Intent intent = new Intent(this, DetectionActivity.class);
         startActivity(intent);
     }

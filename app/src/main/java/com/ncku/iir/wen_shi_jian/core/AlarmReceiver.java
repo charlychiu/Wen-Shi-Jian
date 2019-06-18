@@ -54,7 +54,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder
                 (context, PRIMARY_CHANNEL_ID)
                 .setSmallIcon(R.drawable.small)
-                .setContentTitle("下午3點昏昏欲睡，來問世間醒醒腦子吧")
+                .setContentTitle("昏昏欲睡了嗎?，來問世間醒醒腦子吧")
                 .setContentText("")
                 .setContentIntent(contentPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

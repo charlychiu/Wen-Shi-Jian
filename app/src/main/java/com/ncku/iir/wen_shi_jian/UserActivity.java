@@ -14,12 +14,16 @@ import android.widget.ImageView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.ncku.iir.wen_shi_jian.core.Sound;
 
 public class UserActivity extends AppCompatActivity {
 
     ImageView userView;
     EditText nameText;
     EditText ageText;
+
+    // set music
+    Sound sound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +56,15 @@ public class UserActivity extends AppCompatActivity {
                 }
             }
         }
+
+        // music play
+        sound = new Sound(getBaseContext());
+        sound.changeAndPlayMusic("budda");
     }
 
     public void startGame(View view) {
+        sound.recyle();
+
         // TODO: step 6 save user data to DB
         String userInputName = nameText.getText().toString();
         String userInputAge = ageText.getText().toString();

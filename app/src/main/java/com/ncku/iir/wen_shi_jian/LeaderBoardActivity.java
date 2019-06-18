@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.ncku.iir.wen_shi_jian.core.Global;
+import com.ncku.iir.wen_shi_jian.core.Sound;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,10 +39,17 @@ public class LeaderBoardActivity extends AppCompatActivity {
     Button againButton;
     Button nextButton;
 
+    // set music
+    Sound sound;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.leaderbord_page);
+
+        // music play
+        sound = new Sound(getBaseContext());
+        sound.changeAndPlayMusic("john");
 
         firstView = (TextView)findViewById(R.id.firstView);
         secondView = (TextView)findViewById(R.id.secondView);
@@ -60,6 +68,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Continue
+                sound.recyle();
                 goQuestionLevel();
             }
         });
@@ -67,6 +76,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sound.recyle();
                 goMain();
             }
         });
