@@ -24,31 +24,31 @@
             android:id="@+id/firstView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_red_light"
+            android:background="@drawable/option_red"
             android:gravity="left"
             android:text="第 1 名"
             android:textColor="@android:color/white"
-            android:textSize="50sp" />
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/secondView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_red_light"
+            android:background="@drawable/option_red"
             android:gravity="left"
             android:text="第 2 名"
             android:textColor="@android:color/white"
-            android:textSize="50sp" />
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/thirdView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_red_light"
+            android:background="@drawable/option_red"
             android:gravity="left"
             android:text="第 3 名"
             android:textColor="@android:color/white"
-            android:textSize="50sp" />
+            android:textSize="40sp" />
 
     </LinearLayout>
 
@@ -68,21 +68,21 @@
             android:id="@+id/bestView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_green_dark"
+            android:background="@drawable/option_green"
             android:gravity="left"
             android:text="最好排名"
             android:textColor="@android:color/white"
-            android:textSize="50sp" />
+            android:textSize="40sp" />
 
         <TextView
             android:id="@+id/currentView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_green_light"
+            android:background="@drawable/option_lightgreen"
             android:gravity="left"
             android:text="此次排名"
             android:textColor="@android:color/white"
-            android:textSize="50sp" />
+            android:textSize="40sp" />
     </LinearLayout>
 
     <LinearLayout

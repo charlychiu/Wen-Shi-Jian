@@ -135,7 +135,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
                         break;
                     }
                 }
-                String bestString = String.format("最好排名 %d/%d", userCurrentRank ,totalRankCount);
+                String bestString = String.format("歷史最好排名 %d/%d", userCurrentRank ,totalRankCount);
                 bestView.setText(bestString);
             }
 
