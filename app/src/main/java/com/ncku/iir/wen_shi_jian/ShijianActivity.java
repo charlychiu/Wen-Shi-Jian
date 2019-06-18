@@ -77,7 +77,7 @@ public class ShijianActivity extends AppCompatActivity {
 //                    .load(R.drawable.sj01)
 //                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
 //                    .into(imageview);
-            imageview.setImageResource(R.drawable.sj01);
+            imageview.setImageResource(R.drawable.tower);
         }
         else if (num==0){
 //            Glide.with(getApplicationContext())
