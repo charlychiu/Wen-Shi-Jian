@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         final AlarmManager alarmManager = (AlarmManager) getSystemService
                 (ALARM_SERVICE);
 
-        long repeatInterval = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
+        long repeatInterval = AlarmManager.INTERVAL_DAY;
 
         long triggerTime = System.currentTimeMillis();
 
