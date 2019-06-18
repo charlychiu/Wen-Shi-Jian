@@ -2,6 +2,8 @@ package com.ncku.iir.wen_shi_jian;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.google.gson.JsonObject;
 import com.ncku.iir.wen_shi_jian.core.Global;
 import com.ncku.iir.wen_shi_jian.core.RetrofitRequest;
+import com.ncku.iir.wen_shi_jian.core.Sound;
 
 public class QuestionActivity extends AppCompatActivity {
 
@@ -44,11 +47,31 @@ public class QuestionActivity extends AppCompatActivity {
     Button buttonC;
     Button buttonD;
 
+    // set music
+    private int timerId = 0;
+    private SoundPool soundPool;
+    private int noId = 1;
+    private int yesId = 2;
+    Sound sound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_page);
+
+        // set music
+        // soundpool
+//        soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 5);
+        soundPool = new SoundPool.Builder().build();
+        timerId = soundPool.load(this, R.raw.countdown, 0);
+        noId = soundPool.load(this,R.raw.nope,1);
+        yesId = soundPool.load(this,R.raw.right,1);
+
+//        playTimer();
+
+        // music play
+        sound = new Sound(getBaseContext());
+        sound.changeAndPlayMusic();
 
         username = Global.username;
         topicId = Global.topic_id;
@@ -147,6 +170,7 @@ public class QuestionActivity extends AppCompatActivity {
                 handleAnswer("A");
                 if(answer.equals("A")||answer.equals("a")){
                     buttonA.setBackgroundColor(Color.GREEN);
+                    soundPool.play(yesId, 1.0F, 1.0F, 0, 0, 1.0F);
                     Global.correct_count += 1;
                     correct_count += 1;
                     if(topicId == 35) {
@@ -161,6 +185,7 @@ public class QuestionActivity extends AppCompatActivity {
                 }
                 else {
                     buttonA.setBackgroundColor(Color.RED);
+                    soundPool.play(noId, 1.0F, 1.0F, 0, 0, 1.0F);
                     switch (answer){
                         case "A":
                             buttonA.setBackgroundColor(Color.GREEN);
@@ -210,6 +235,7 @@ public class QuestionActivity extends AppCompatActivity {
                 handleAnswer("B");
                 if(answer.equals("B")||answer.equals("b")){
                     buttonB.setBackgroundColor(Color.GREEN);
+                    soundPool.play(yesId, 1.0F, 1.0F, 0, 0, 1.0F);
                     Global.correct_count += 1;
                     correct_count += 1;
                     if(topicId == 35) {
@@ -224,6 +250,7 @@ public class QuestionActivity extends AppCompatActivity {
                 }
                 else {
                     buttonB.setBackgroundColor(Color.RED);
+                    soundPool.play(noId, 1.0F, 1.0F, 0, 0, 1.0F);
                     switch (answer){
                         case "A":
                             buttonA.setBackgroundColor(Color.GREEN);
@@ -274,6 +301,7 @@ public class QuestionActivity extends AppCompatActivity {
                 handleAnswer("C");
                 if(answer.equals("C")||answer.equals("c")){
                     buttonC.setBackgroundColor(Color.GREEN);
+                    soundPool.play(yesId, 1.0F, 1.0F, 0, 0, 1.0F);
                     Global.correct_count += 1;
                     correct_count += 1;
                     if(topicId == 35) {
@@ -288,6 +316,7 @@ public class QuestionActivity extends AppCompatActivity {
                 }
                 else {
                     buttonC.setBackgroundColor(Color.RED);
+                    soundPool.play(noId, 1.0F, 1.0F, 0, 0, 1.0F);
                     switch (answer){
                         case "A":
                             buttonA.setBackgroundColor(Color.GREEN);
@@ -338,6 +367,7 @@ public class QuestionActivity extends AppCompatActivity {
                 handleAnswer("D");
                 if(answer.equals("D")||answer.equals("d")){
                     buttonD.setBackgroundColor(Color.GREEN);
+                    soundPool.play(yesId, 1.0F, 1.0F, 0, 0, 1.0F);
                     Global.correct_count += 1;
                     correct_count += 1;
                     if(topicId == 35) {
@@ -352,6 +382,7 @@ public class QuestionActivity extends AppCompatActivity {
                 }
                 else {
                     buttonD.setBackgroundColor(Color.RED);
+                    soundPool.play(noId, 1.0F, 1.0F, 0, 0, 1.0F);
                     switch (answer){
                         case "A":
                             buttonA.setBackgroundColor(Color.GREEN);
@@ -401,12 +432,16 @@ public class QuestionActivity extends AppCompatActivity {
 
     public void goFeedback(){
 //        Intent intent = new Intent(this, FeedbackActivity.class);
+        soundPool.release();
+        sound.recyle();
         Intent intent = new Intent(this, ShijianActivity.class);
         startActivity(intent);
 
     }
 
     public  void goQuestionType(){
+        soundPool.release();
+        sound.recyle();
         Intent intent = new Intent(this, QuestionTypeActivity.class);
         startActivity(intent);
     }
@@ -421,5 +456,9 @@ public class QuestionActivity extends AppCompatActivity {
 
         RetrofitRequest RequestAPI  = RetrofitRequest.getInstance();
         RequestAPI.answerCorrectResponse(url_q, getAnswertask);
+    }
+
+    public void playTimer(){
+        soundPool.play(timerId, 1.0F, 1.0F, 0, 0, 1.0F);
     }
 }
